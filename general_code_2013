@@ -34,3 +34,28 @@ function array_sort($array_name,$row_id,$order_type)
    
    return $result_array;
 }
+
+
+
+//二分法查找(针对有序的列进行查找)
+function binary_search($arrData,$val) {
+    $len = count($arrData);
+    if($len == 0) return -1;
+
+    $start = 0;
+    $end   = $len - 1;
+
+    while($start <= $end) {
+        $middle = intval(($start + $end)/2);
+        if($arrData[$middle] == $val) {
+            return $middle;
+        } elseif ($arrData[$middle] > $val) {
+            $end = $middle - 1 ;
+        } elseif ($arrData[$middle] < $val) {
+            $start = $middle + 1;
+        }
+    }
+    return -1; 
+}
+
+example: $target = binary_search(array(1,2,3,4,5),3);
