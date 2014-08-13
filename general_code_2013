@@ -59,3 +59,55 @@ function binary_search($arrData,$val) {
 }
 
 example: $target = binary_search(array(1,2,3,4,5),3);
+
+
+
+//$rand_arr里面放一些概率 ，例如$rand_arr(10,20,30);最后返回键值
+public function new_rand($rand_arr) {
+
+		if ( empty($rand_arr) || ! is_array($rand_arr) )
+			return false;
+
+		$start = 1;
+		$end = 0;
+
+		$min = min($rand_arr);
+		$pow = 0;
+
+		$change = explode( '.', $min );
+		if ( count($change) == 2 )
+			$pow = strlen($change[1]);
+
+		foreach ( $rand_arr as $k => $v ) {
+
+			$rand_arr[$k] = $v * pow( 10, $pow );
+
+		}
+
+		$odds_sum = 0;
+
+		foreach ( $rand_arr as $k => $v ) {
+
+			$odds_sum += $v;
+			$odds_arr[$k] = array( $start, $v + $end, );
+			$start += $v;
+			$end += $v;
+
+		}
+
+		$final = mt_rand( 1, $odds_sum );
+
+		foreach ( $odds_arr as $key => $arr ) {
+
+			if ( $final >= $arr[0] && $final <= $arr[1] ) {
+
+				$ret = $key;
+				break;
+
+			}
+
+		}
+
+		return isset($ret) ? $ret : false;
+
+	}//End of function
