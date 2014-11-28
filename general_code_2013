@@ -111,3 +111,46 @@ public function new_rand($rand_arr) {
 		return isset($ret) ? $ret : false;
 
 	}//End of function
+	
+	
+	
+	
+	
+	/**
+	 * 加密
+	 * @param string $str 要加密的字符串
+	 * @param string $key 密钥
+	 * @return string 
+	 * */
+	static function encrypt($str, $key) {
+		if ($key == "" || $str == ""){
+			return "";
+		}
+        $result = "";
+        for($i = 0;$i < ceil(strlen($str) / strlen($key));$i++) {
+			$result = $result . bin2hex(substr($str, $i * strlen($key), ($i + 1) * strlen($key)) ^ $key);
+        }
+        return $result;
+	}
+
+	/**
+	 * 解密
+	 * @param string $str 要解密的字符串
+	 * @param string $key 密钥
+	 * @return string
+	 * */
+	static function decrypt($str, $key) {
+        if ($key == "" || $str == ""){
+			return "";
+        }
+        $result = "";
+        $j = 0;
+        for($i = 0;$i < strlen($str) / 2;$i++) {
+			if ($j >= strlen($key)){
+				$j = 0;
+			}
+			$result = $result . (chr((hexdec(substr($str, $i * 2, 2)))) ^ substr($key, $j, 1));
+			$j++;
+        }
+        return $result;
+	}
